@@ -14,6 +14,12 @@ export const headCells: readonly HeadCell[] = [
     label: 'Book ID',
   },
   {
+    id: 'bookName',
+    numeric: true,
+    disablePadding: false,
+    label: 'Book Name',
+  },
+  {
     id: 'userName',
     numeric: true,
     disablePadding: false,
@@ -36,6 +42,7 @@ export const headCells: readonly HeadCell[] = [
 export const createData = (
   reservationId: string,
   bookId: string,
+  bookName: string,
   userName: string,
   startTime: string,
   endTime: string,
@@ -43,6 +50,7 @@ export const createData = (
   return {
     reservationId,
     bookId,
+    bookName,
     userName,
     startTime,
     endTime,
@@ -53,6 +61,7 @@ export const rows = [
   createData(
     'a1f4',
     '1b',
+    'JS for Dummies',
     'John Doe',
     'November 17th 2022, 1:29:27 am',
     'November 27th 2022, 1:29:27 am',
@@ -60,6 +69,7 @@ export const rows = [
   createData(
     'b5d3',
     '2a',
+    'Sunny Land',
     'Good Person',
     'November 17th 2022, 1:29:27 am',
     'November 27th 2022, 1:29:27 am',
@@ -67,6 +77,7 @@ export const rows = [
   createData(
     'da78',
     '2a',
+    'Sunny Land',
     'Avid Reader',
     'November 17th 2022, 1:29:27 am',
     'November 27th 2022, 1:29:27 am',
@@ -74,6 +85,8 @@ export const rows = [
   createData(
     'mn91',
     '3d',
+    // eslint-disable-next-line quotes
+    "World's Atlas",
     'Mike Smith',
     'November 17th 2022, 1:29:27 am',
     'November 27th 2022, 1:29:27 am',

@@ -1,6 +1,7 @@
 export interface Data {
   reservationId: string
   bookId: string
+  bookName: string
   userName: string
   startTime: string
   endTime: string

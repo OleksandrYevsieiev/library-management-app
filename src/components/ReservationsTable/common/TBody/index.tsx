@@ -101,6 +101,7 @@ rows.sort(getComparator(order, orderBy)).slice() */}
                 {row.reservationId}
               </TableCell>
               <TableCell align='right'>{row.bookId}</TableCell>
+              <TableCell align='right'>{row.bookName}</TableCell>
               <TableCell align='right'> {row.userName}</TableCell>
               <TableCell align='right'>{row.startTime}</TableCell>
               <TableCell align='right'>{row.endTime}</TableCell>
