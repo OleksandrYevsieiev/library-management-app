@@ -25,6 +25,7 @@ export const fetchReservations =
       const response = await axiosInstance.get<IReservation[]>(
         `api/books/reservation?page=${page}&limit=${rowsPerPage}`,
       )
+
       dispatch(reservationSlice.actions.reservFetchingSuccess(response.data))
     } catch (e: any) {
       dispatch(reservationSlice.actions.reservFetchingError(e.message))

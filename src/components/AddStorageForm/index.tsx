@@ -4,6 +4,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import { addBook } from '../../api'
 
 interface IFormInput {
   title: string
@@ -13,7 +14,10 @@ interface IFormInput {
 
 export const AddStorageForm = () => {
   const { handleSubmit, control } = useForm<IFormInput>()
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    await addBook(data)
+  }
 
   return (
     <Box
@@ -63,7 +67,17 @@ export const AddStorageForm = () => {
       <Controller
         name={'count'}
         control={control}
-        rules={{ required: 'Count should be positive', min: 1, max: 99 }}
+        rules={{
+          required: 'Count should be positive',
+          min: {
+            message: 'Let us add at least one',
+            value: 1,
+          },
+          max: {
+            message: 'Try less than 99',
+            value: 99,
+          },
+        }}
         defaultValue={1}
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <TextField
