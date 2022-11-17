@@ -27,11 +27,11 @@ export const EnhancedTable = () => {
 
   React.useEffect(() => {
     dispatch(fetchReservations(page, rowsPerPage))
-  }, [])
+  }, [page, rowsPerPage])
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = reservations.map((n) => n.user_name)
+      const newSelected = reservations.map((n) => n._id)
       setSelected(newSelected)
       return
     }
@@ -46,7 +46,6 @@ export const EnhancedTable = () => {
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage)
-    dispatch(fetchReservations(newPage, rowsPerPage))
   }
 
   const handleChangeRowsPerPage = (
@@ -54,7 +53,6 @@ export const EnhancedTable = () => {
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
-    dispatch(fetchReservations(page, parseInt(event.target.value, 10)))
   }
 
   const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,14 +85,13 @@ export const EnhancedTable = () => {
               rowsPerPage={rowsPerPage}
               dense={dense}
               setSelected={setSelected}
-              reservations={reservations}
             />
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
-          count={reservations.length}
+          count={-1}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

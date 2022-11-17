@@ -6,9 +6,12 @@ import Checkbox from '@mui/material/Checkbox'
 
 import { TBodyProps } from '../../interfaces'
 import { IReservation } from '../../../../models/IReservation'
+import { useAppSelector } from '../../../../hooks/redux'
 
 export const TBody = (props: TBodyProps) => {
-  const { page, selected, rowsPerPage, dense, setSelected, reservations, order, orderBy } = props
+  const { page, selected, rowsPerPage, dense, setSelected, order, orderBy } = props
+
+  const { reservations } = useAppSelector((state) => state.reservationReducer)
 
   function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -77,13 +80,12 @@ export const TBody = (props: TBodyProps) => {
       {stableSort(reservations, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row, index) => {
-          const isItemSelected = isSelected(row.book_id.toString())
+          const isItemSelected = isSelected(row._id as string)
           const labelId = `enhanced-table-checkbox-${index}`
-
           return (
             <TableRow
               hover
-              onClick={(event) => handleClick(event, row.book_id.toString())}
+              onClick={(event) => handleClick(event, row._id as string)}
               role='checkbox'
               aria-checked={isItemSelected}
               tabIndex={-1}

@@ -1,5 +1,3 @@
-import { IReservation } from '../../../models/IReservation'
-
 export interface Data {
   _id: string
   book_id: string
@@ -36,7 +34,6 @@ export interface TBodyProps {
   rowsPerPage: number
   dense: boolean
   setSelected: React.Dispatch<React.SetStateAction<readonly string[]>>
-  reservations: IReservation[]
   order: Order
   orderBy: string
 }
