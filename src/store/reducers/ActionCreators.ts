@@ -10,7 +10,7 @@ export const addBooks = (data: IBook) => async (dispatch: AppDispatch) => {
     dispatch(booksSlice.actions.booksAdding())
 
     const result = await axiosInstance.post('api/books/store', data)
-    if (result?.status === 201) alert('You have sucessfully added a book to storage!')
+    if (result?.status === 201) alert('You have sucessfully added the book(s) to the storage!')
     dispatch(booksSlice.actions.booksAddingSuccess(result.data))
   } catch (e: any) {
     dispatch(booksSlice.actions.booksAddingError(e.message))
@@ -44,3 +44,15 @@ export const fetchReservations =
       dispatch(reservationSlice.actions.reservFetchingError(e.message))
     }
   }
+
+export const deleteReservation = (data: string[]) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(reservationSlice.actions.oneReservDeleting())
+
+    await axiosInstance.delete<string[]>('api/books/reservation', { data })
+
+    dispatch(reservationSlice.actions.oneReservDeletingSuccess(data))
+  } catch (e: any) {
+    dispatch(reservationSlice.actions.oneReserveDeletingError(e.message))
+  }
+}

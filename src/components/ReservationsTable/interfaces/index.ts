@@ -24,16 +24,19 @@ export interface HeadCell {
 
 export interface EnhancedTableToolbarProps {
   numSelected: number
+  selected: string[]
+  page: number
+  rowsPerPage: number
 }
 
 export type Order = 'asc' | 'desc'
 
 export interface TBodyProps {
   page: number
-  selected: readonly string[]
+  selected: string[]
   rowsPerPage: number
   dense: boolean
-  setSelected: React.Dispatch<React.SetStateAction<readonly string[]>>
+  setSelected: React.Dispatch<React.SetStateAction<string[]>>
   order: Order
   orderBy: string
 }

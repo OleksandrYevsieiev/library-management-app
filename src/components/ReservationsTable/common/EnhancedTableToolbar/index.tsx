@@ -9,9 +9,18 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import FilterListIcon from '@mui/icons-material/FilterList'
 
 import { EnhancedTableToolbarProps } from '../../interfaces'
+import { useAppDispatch } from '../../../../hooks/redux'
+import { deleteReservation, fetchReservations } from '../../../../store/reducers/ActionCreators'
 
 export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected } = props
+  const { numSelected, selected, page, rowsPerPage } = props
+
+  const dispatch = useAppDispatch()
+
+  const deleteReservationHandler = () => {
+    dispatch(deleteReservation(selected))
+    dispatch(fetchReservations(page, rowsPerPage))
+  }
 
   return (
     <Toolbar
@@ -34,7 +43,7 @@ export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       )}
       {numSelected > 0 ? (
-        <Tooltip title='Delete'>
+        <Tooltip title='Delete' onClick={deleteReservationHandler}>
           <IconButton>
             <DeleteIcon />
           </IconButton>

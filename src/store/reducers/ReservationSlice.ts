@@ -30,6 +30,21 @@ export const reservationSlice = createSlice({
       state.isLoading = false
       state.error = action.payload
     },
+
+    oneReservDeleting(state) {
+      state.isLoading = true
+    },
+    oneReservDeletingSuccess(state, action: PayloadAction<string[]>) {
+      state.isLoading = false
+      state.error = ''
+      state.reservations = state.reservations.filter(
+        (reservation) => action.payload.indexOf(reservation._id) === -1,
+      )
+    },
+    oneReserveDeletingError(state, action: PayloadAction<string>) {
+      state.isLoading = false
+      state.error = action.payload
+    },
   },
 })
 
