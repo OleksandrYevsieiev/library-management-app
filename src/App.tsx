@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 
 import { AddStorageForm } from './components/AddStorageForm'
 import { EnhancedTable } from './components/ReservationsTable'
+import Supert from './components/tbl'
 
 export const App = () => {
   return (
@@ -18,6 +19,7 @@ export const App = () => {
       </Typography>
       <AddStorageForm />
       <EnhancedTable />
+      <Supert />
     </div>
   )
 }

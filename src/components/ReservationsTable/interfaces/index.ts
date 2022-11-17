@@ -1,13 +1,21 @@
+import { IReservation } from '../../../models/IReservation'
+
 export interface Data {
-  reservationId: string
-  bookId: string
-  bookName: string
-  userName: string
-  startTime: string
-  endTime: string
+  _id: string
+  book_id: string
+  user_name: string
+  start_date: string
+  end_date: string
 }
 
-export type Order = 'asc' | 'desc'
+export interface EnhancedTableProps {
+  numSelected: number
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void
+  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
+  order: Order
+  orderBy: string
+  rowCount: number
+}
 
 export interface HeadCell {
   disablePadding: boolean
@@ -20,12 +28,15 @@ export interface EnhancedTableToolbarProps {
   numSelected: number
 }
 
+export type Order = 'asc' | 'desc'
+
 export interface TBodyProps {
   page: number
   selected: readonly string[]
   rowsPerPage: number
-  order: Order
-  orderBy: keyof Data
   dense: boolean
   setSelected: React.Dispatch<React.SetStateAction<readonly string[]>>
+  reservations: IReservation[]
+  order: Order
+  orderBy: string
 }

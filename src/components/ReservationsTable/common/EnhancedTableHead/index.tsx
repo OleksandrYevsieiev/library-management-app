@@ -1,27 +1,19 @@
 import React from 'react'
 
+import Box from '@mui/material/Box'
 import TableHead from '@mui/material/TableHead'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { visuallyHidden } from '@mui/utils'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Checkbox from '@mui/material/Checkbox'
-import Box from '@mui/material/Box'
+import { visuallyHidden } from '@mui/utils'
 
-import { Data, Order } from '../../interfaces'
 import { headCells } from '../../data'
-
-interface EnhancedTableProps {
-  numSelected: number
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
-  order: Order
-  orderBy: string
-  rowCount: number
-}
+import { Data, EnhancedTableProps } from '../../interfaces'
 
 export const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props
+  const { onSelectAllClick, onRequestSort, numSelected, rowCount, order, orderBy } = props
+
   const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property)
   }

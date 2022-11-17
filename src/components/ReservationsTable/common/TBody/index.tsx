@@ -4,11 +4,11 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Checkbox from '@mui/material/Checkbox'
 
-import { Order, TBodyProps } from '../../interfaces'
-import { rows } from '../../data'
+import { TBodyProps } from '../../interfaces'
+import { IReservation } from '../../../../models/IReservation'
 
 export const TBody = (props: TBodyProps) => {
-  const { page, selected, rowsPerPage, order, orderBy, dense, setSelected } = props
+  const { page, selected, rowsPerPage, dense, setSelected, reservations, order, orderBy } = props
 
   function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -19,6 +19,8 @@ export const TBody = (props: TBodyProps) => {
     }
     return 0
   }
+
+  type Order = 'asc' | 'desc'
 
   function getComparator<Key extends keyof any>(
     order: Order,
@@ -31,7 +33,7 @@ export const TBody = (props: TBodyProps) => {
 
   // This method is created for cross-browser compatibility, if you don't
   // need to support IE11, you can use Array.prototype.sort() directly
-  function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+  function stableSort<T>(array: readonly IReservation[], comparator: (a: T, b: T) => number) {
     const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
     stabilizedThis.sort((a, b) => {
       const order = comparator(a[0], b[0])
@@ -46,7 +48,7 @@ export const TBody = (props: TBodyProps) => {
   const isSelected = (name: string) => selected.indexOf(name) !== -1
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - reservations.length) : 0
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name)
@@ -71,21 +73,21 @@ export const TBody = (props: TBodyProps) => {
   return (
     <TableBody>
       {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-rows.sort(getComparator(order, orderBy)).slice() */}
-      {stableSort(rows, getComparator(order, orderBy))
+              rows.sort(getComparator(order, orderBy)).slice() */}
+      {stableSort(reservations, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row, index) => {
-          const isItemSelected = isSelected(row.userName)
+          const isItemSelected = isSelected(row.book_id.toString())
           const labelId = `enhanced-table-checkbox-${index}`
 
           return (
             <TableRow
               hover
-              onClick={(event) => handleClick(event, row.userName)}
+              onClick={(event) => handleClick(event, row.book_id.toString())}
               role='checkbox'
               aria-checked={isItemSelected}
               tabIndex={-1}
-              key={row.userName}
+              key={row._id}
               selected={isItemSelected}
             >
               <TableCell padding='checkbox'>
@@ -98,13 +100,12 @@ rows.sort(getComparator(order, orderBy)).slice() */}
                 />
               </TableCell>
               <TableCell component='th' id={labelId} scope='row' padding='none'>
-                {row.reservationId}
+                {row._id}
               </TableCell>
-              <TableCell align='right'>{row.bookId}</TableCell>
-              <TableCell align='right'>{row.bookName}</TableCell>
-              <TableCell align='right'> {row.userName}</TableCell>
-              <TableCell align='right'>{row.startTime}</TableCell>
-              <TableCell align='right'>{row.endTime}</TableCell>
+              <TableCell align='right'>{row.book_id}</TableCell>
+              <TableCell align='right'> {row.user_name}</TableCell>
+              <TableCell align='right'>{row.start_date}</TableCell>
+              <TableCell align='right'>{row.end_date}</TableCell>
             </TableRow>
           )
         })}

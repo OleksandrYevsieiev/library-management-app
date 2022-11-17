@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import booksReducer from './reducers/BookSlice'
+import reservationReducer from './reducers/ReservationSlice'
 
 const rootReducer = combineReducers({
   booksReducer,
+  reservationReducer,
 })
 
 export const setupStore = () => {
