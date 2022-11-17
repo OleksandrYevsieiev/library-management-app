@@ -4,7 +4,9 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { addBook } from '../../api'
+
+import { useAppDispatch } from '../../hooks/redux'
+import { addBooks } from '../../store/reducers/ActionCreators'
 
 interface IFormInput {
   title: string
@@ -14,9 +16,10 @@ interface IFormInput {
 
 export const AddStorageForm = () => {
   const { handleSubmit, control } = useForm<IFormInput>()
+  const dispatch = useAppDispatch()
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    await addBook(data)
+    dispatch(addBooks(data))
   }
 
   return (

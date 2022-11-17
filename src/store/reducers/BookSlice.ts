@@ -17,6 +17,18 @@ export const booksSlice = createSlice({
   name: 'Books',
   initialState,
   reducers: {
+    booksAdding(state) {
+      state.isLoading = true
+    },
+    booksAddingSuccess(state, action: PayloadAction<IBook>) {
+      state.isLoading = false
+      state.error = ''
+      state.books.push(action.payload)
+    },
+    booksAddingError(state, action: PayloadAction<string>) {
+      state.isLoading = false
+      state.error = action.payload
+    },
     booksFetching(state) {
       state.isLoading = true
     },

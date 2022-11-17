@@ -5,6 +5,19 @@ import { AppDispatch } from '../store'
 import { booksSlice } from './BookSlice'
 import { reservationSlice } from './ReservationSlice'
 
+export const addBooks = (data: IBook) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(booksSlice.actions.booksAdding())
+
+    const result = await axiosInstance.post('api/books/store', data)
+    if (result?.status === 201) alert('You have sucessfully added a book to storage!')
+    dispatch(booksSlice.actions.booksAddingSuccess(result.data))
+  } catch (e: any) {
+    dispatch(booksSlice.actions.booksAddingError(e.message))
+    alert('Something went wrong. Probably a non unique title name?')
+  }
+}
+
 export const fetchBooks = (page: number, rowsPerPage: number) => async (dispatch: AppDispatch) => {
   try {
     dispatch(booksSlice.actions.booksFetching())
