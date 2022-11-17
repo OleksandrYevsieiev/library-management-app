@@ -29,8 +29,8 @@ export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography sx={{ flex: '1 1 100%' }} variant='h6' id='tableTitle' component='div'>
-          Reservations
+        <Typography sx={{ flex: '1 1 100%' }} variant='h4' id='tableTitle' component='div'>
+          Reservations & Books
         </Typography>
       )}
       {numSelected > 0 ? (
