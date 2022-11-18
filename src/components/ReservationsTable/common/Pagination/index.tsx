@@ -1,23 +1,26 @@
 import * as React from 'react'
-import TablePagination from '@mui/material/TablePagination'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
-interface IPagination {
+interface IBasicPagination {
+  count: number
+  defaultPage: number
   page: number
-  rowsPerPage: number
   handleChangePage: any
-  handleChangeRowsPerPage: any
 }
-export const Pagination = (props: IPagination) => {
-  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = props
 
+export const BasicPagination = (props: IBasicPagination) => {
+  const { count, defaultPage, page, handleChangePage } = props
   return (
-    <TablePagination
-      component='div'
-      count={100}
-      page={page}
-      onPageChange={handleChangePage}
-      rowsPerPage={rowsPerPage}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-    />
+    <Stack spacing={2}>
+      <Pagination
+        defaultPage={defaultPage}
+        count={count}
+        page={page}
+        onChange={handleChangePage}
+        showFirstButton
+        showLastButton
+      />
+    </Stack>
   )
 }

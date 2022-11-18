@@ -12,7 +12,7 @@ import { EnhancedTableToolbar } from './common/EnhancedTableToolbar'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { fetchReservations } from '../../store/reducers/ActionCreators'
 import { Data, Order } from './interfaces'
-import { Pagination } from './common/Pagination'
+import { BasicPagination } from './common/Pagination'
 
 export const EnhancedTable = () => {
   const [order, setOrder] = React.useState<Order>('asc')
@@ -20,14 +20,15 @@ export const EnhancedTable = () => {
   const [selected, setSelected] = React.useState<string[]>([])
   const [page, setPage] = React.useState(0)
   const [dense, setDense] = React.useState(false)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
   const { reservations } = useAppSelector((state) => state.reservationReducer)
   const dispatch = useAppDispatch()
 
+  const rowsPerPage = 5
+
   React.useEffect(() => {
     dispatch(fetchReservations(page, rowsPerPage))
-  }, [page, rowsPerPage])
+  }, [page])
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -46,14 +47,7 @@ export const EnhancedTable = () => {
   }
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
+    setPage(newPage - 1)
   }
 
   const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +63,14 @@ export const EnhancedTable = () => {
           numSelected={selected.length}
           selected={selected}
         />
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <BasicPagination
+            defaultPage={0}
+            count={reservations.length}
+            page={page + 1}
+            handleChangePage={handleChangePage}
+          />
+        </Box>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -94,12 +96,6 @@ export const EnhancedTable = () => {
             />
           </Table>
         </TableContainer>
-        <Pagination
-          page={page}
-          rowsPerPage={rowsPerPage}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
-        />
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
