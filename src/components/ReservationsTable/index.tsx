@@ -31,7 +31,8 @@ export const EnhancedTable = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = reservations.map((n) => n._id)
+      const newSelected = reservations.map((n) => n._id) as string[]
+
       setSelected(newSelected)
       return
     }
@@ -45,6 +46,7 @@ export const EnhancedTable = () => {
   }
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    console.log(newPage, 'newPage')
     setPage(newPage)
   }
 
@@ -96,9 +98,9 @@ export const EnhancedTable = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
-          count={-1}
-          rowsPerPage={rowsPerPage}
+          count={reservations.length}
           page={page}
+          rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
