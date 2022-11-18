@@ -3,7 +3,6 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import TableContainer from '@mui/material/TableContainer'
-import TablePagination from '@mui/material/TablePagination'
 import Paper from '@mui/material/Paper'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
@@ -13,6 +12,7 @@ import { EnhancedTableToolbar } from './common/EnhancedTableToolbar'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { fetchReservations } from '../../store/reducers/ActionCreators'
 import { Data, Order } from './interfaces'
+import { Pagination } from './common/Pagination'
 
 export const EnhancedTable = () => {
   const [order, setOrder] = React.useState<Order>('asc')
@@ -46,7 +46,6 @@ export const EnhancedTable = () => {
   }
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    console.log(newPage, 'newPage')
     setPage(newPage)
   }
 
@@ -95,14 +94,11 @@ export const EnhancedTable = () => {
             />
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component='div'
-          count={reservations.length}
+        <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
       <FormControlLabel
