@@ -9,7 +9,7 @@ import { IReservation } from '../../../../models/IReservation'
 import { useAppSelector } from '../../../../hooks/redux'
 
 export const TBody = (props: TBodyProps) => {
-  const { page, selected, rowsPerPage, dense, setSelected, order, orderBy } = props
+  const { selected, setSelected, order, orderBy } = props
 
   const { reservations } = useAppSelector((state) => state.reservationReducer)
 
@@ -50,9 +50,6 @@ export const TBody = (props: TBodyProps) => {
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - reservations.length) : 0
-
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name)
     let newSelected: string[] = []
@@ -77,49 +74,38 @@ export const TBody = (props: TBodyProps) => {
     <TableBody>
       {/* if you don't need to support IE11, you can replace the `stableSort` call with:
               rows.sort(getComparator(order, orderBy)).slice() */}
-      {stableSort(reservations, getComparator(order, orderBy))
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map((row, index) => {
-          const isItemSelected = isSelected(row._id as string)
-          const labelId = `enhanced-table-checkbox-${index}`
-          return (
-            <TableRow
-              hover
-              onClick={(event) => handleClick(event, row._id as string)}
-              role='checkbox'
-              aria-checked={isItemSelected}
-              tabIndex={-1}
-              key={row._id}
-              selected={isItemSelected}
-            >
-              <TableCell padding='checkbox'>
-                <Checkbox
-                  color='primary'
-                  checked={isItemSelected}
-                  inputProps={{
-                    'aria-labelledby': labelId,
-                  }}
-                />
-              </TableCell>
-              <TableCell component='th' id={labelId} scope='row' padding='none'>
-                {row._id}
-              </TableCell>
-              <TableCell align='right'>{row.book_id}</TableCell>
-              <TableCell align='right'> {row.user_name}</TableCell>
-              <TableCell align='right'>{row.start_date}</TableCell>
-              <TableCell align='right'>{row.end_date}</TableCell>
-            </TableRow>
-          )
-        })}
-      {emptyRows > 0 && (
-        <TableRow
-          style={{
-            height: (dense ? 33 : 53) * emptyRows,
-          }}
-        >
-          <TableCell colSpan={6} />
-        </TableRow>
-      )}
+      {stableSort(reservations, getComparator(order, orderBy)).map((row, index) => {
+        const isItemSelected = isSelected(row._id as string)
+        const labelId = `enhanced-table-checkbox-${index}`
+        return (
+          <TableRow
+            hover
+            onClick={(event) => handleClick(event, row._id as string)}
+            role='checkbox'
+            aria-checked={isItemSelected}
+            tabIndex={-1}
+            key={row._id}
+            selected={isItemSelected}
+          >
+            <TableCell padding='checkbox'>
+              <Checkbox
+                color='primary'
+                checked={isItemSelected}
+                inputProps={{
+                  'aria-labelledby': labelId,
+                }}
+              />
+            </TableCell>
+            <TableCell component='th' id={labelId} scope='row' padding='none'>
+              {row._id}
+            </TableCell>
+            <TableCell align='right'>{row.book_id}</TableCell>
+            <TableCell align='right'> {row.user_name}</TableCell>
+            <TableCell align='right'>{row.start_date}</TableCell>
+            <TableCell align='right'>{row.end_date}</TableCell>
+          </TableRow>
+        )
+      })}
     </TableBody>
   )
 }

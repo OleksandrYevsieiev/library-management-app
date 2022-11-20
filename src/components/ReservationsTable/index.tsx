@@ -85,15 +85,7 @@ export const EnhancedTable = () => {
               onRequestSort={handleRequestSort}
               rowCount={reservations.length}
             />
-            <TBody
-              page={page}
-              order={order}
-              orderBy={orderBy}
-              selected={selected}
-              rowsPerPage={rowsPerPage}
-              dense={dense}
-              setSelected={setSelected}
-            />
+            <TBody order={order} orderBy={orderBy} selected={selected} setSelected={setSelected} />
           </Table>
         </TableContainer>
       </Paper>

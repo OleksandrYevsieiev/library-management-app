@@ -32,10 +32,7 @@ export interface EnhancedTableToolbarProps {
 export type Order = 'asc' | 'desc'
 
 export interface TBodyProps {
-  page: number
   selected: string[]
-  rowsPerPage: number
-  dense: boolean
   setSelected: React.Dispatch<React.SetStateAction<string[]>>
   order: Order
   orderBy: string
