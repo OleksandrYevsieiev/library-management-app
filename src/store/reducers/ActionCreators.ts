@@ -49,9 +49,11 @@ export const deleteReservation = (data: string[]) => async (dispatch: AppDispatc
   try {
     dispatch(reservationSlice.actions.oneReservDeleting())
 
-    await axiosInstance.delete<string[]>('api/books/reservation', { data })
+    const result = await axiosInstance.delete<string[]>('api/books/reservation', { data })
 
     dispatch(reservationSlice.actions.oneReservDeletingSuccess(data))
+
+    return result
   } catch (e: any) {
     dispatch(reservationSlice.actions.oneReserveDeletingError(e.message))
   }

@@ -17,9 +17,9 @@ export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 
   const dispatch = useAppDispatch()
 
-  const deleteReservationHandler = () => {
-    dispatch(deleteReservation(selected))
-    dispatch(fetchReservations(page, rowsPerPage))
+  const deleteReservationHandler = async () => {
+    const result = await dispatch(deleteReservation(selected))
+    if (result?.status === 202) dispatch(fetchReservations(page, rowsPerPage))
   }
 
   return (
